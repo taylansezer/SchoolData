@@ -14,7 +14,7 @@ class SchoolPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->hasPermission('school.view');
     }
 
     /**
@@ -29,9 +29,10 @@ class SchoolPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user, array $attributes): bool
     {
-        return false;
+        return $user->hasPermission('school.create')
+            && $this->canCreateInScope($user, $attributes);
     }
 
     /**
@@ -60,7 +61,8 @@ class SchoolPolicy
      */
     public function restore(User $user, School $school): bool
     {
-        return false;
+        return $user->hasPermission('school.restore')
+            && $this->hasSchoolScope($user, $school);
     }
 
     /**
@@ -72,30 +74,64 @@ class SchoolPolicy
     }
 
     private function hasSchoolScope(User $user, School $school): bool
-{
-    foreach ($user->roles as $role) {
-        $scopeType = $role->pivot->scope_type;
-        $scopeId = (int) $role->pivot->scope_id;
+    {
+        foreach ($user->roles as $role) {
+            $scopeType = $role->pivot->scope_type;
+            $scopeId = (int) $role->pivot->scope_id;
 
-        if ($scopeType === ScopeType::SCHOOL) {
-            if ($scopeId === $school->id) {
-                return true;
+            if ($scopeType === ScopeType::SCHOOL) {
+                if ($scopeId === $school->id) {
+                    return true;
+                }
+            }
+
+            if ($scopeType === ScopeType::DISTRICT) {
+                if ($scopeId === $school->district_id) {
+                    return true;
+                }
+            }
+
+            if ($scopeType === ScopeType::PROVINCE) {
+                if ($school->district->province_id === $scopeId) {
+                    return true;
+                }
             }
         }
 
-        if ($scopeType === ScopeType::DISTRICT) {
-            if ($scopeId === $school->district_id) {
-                return true;
-            }
-        }
-
-        if ($scopeType === ScopeType::PROVINCE) {
-            if ($school->district->province_id === $scopeId) {
-                return true;
-            }
-        }
+        return false;
     }
 
-    return false;
-}
+    private function canCreateInScope(User $user, array $attributes): bool
+    {
+        if (!isset($attributes['district_id'])) {
+            return false;
+        }
+
+        $districtId = (int) $attributes['district_id'];
+
+        foreach ($user->roles as $role) {
+            $scopeType = $role->pivot->scope_type;
+            $scopeId = (int) $role->pivot->scope_id;
+
+            if ($scopeType === ScopeType::SCHOOL) {
+                continue;
+            }
+
+            if ($scopeType === ScopeType::DISTRICT) {
+                if ($districtId === $scopeId) {
+                    return true;
+                }
+            }
+
+            if ($scopeType === ScopeType::PROVINCE) {
+                $district = \App\Models\District::find($districtId);
+
+                if ($district && $district->province_id === $scopeId) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }

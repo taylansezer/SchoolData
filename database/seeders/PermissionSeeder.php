@@ -28,6 +28,10 @@ class PermissionSeeder extends Seeder
                 'slug' => 'school.delete',
             ],
             [
+                'name' => 'Restore Schools',
+                'slug' => 'school.restore',
+            ],
+            [
                 'name' => 'View Users',
                 'slug' => 'user.view',
             ],
@@ -58,6 +62,26 @@ class PermissionSeeder extends Seeder
             [
                 'name' => 'Export Reports',
                 'slug' => 'report.export',
+            ],
+            [
+                'name' => 'View Districts',
+                'slug' => 'district.view',
+            ],
+            [
+                'name' => 'Create Districts',
+                'slug' => 'district.create',
+            ],
+            [
+                'name' => 'Update Districts',
+                'slug' => 'district.update',
+            ],
+            [
+                'name' => 'Delete Districts',
+                'slug' => 'district.delete',
+            ],
+            [
+                'name' => 'Restore Districts',
+                'slug' => 'district.restore',
             ],
         ];
 

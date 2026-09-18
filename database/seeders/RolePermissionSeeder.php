@@ -17,6 +17,7 @@ class RolePermissionSeeder extends Seeder
                 'school.create',
                 'school.update',
                 'school.delete',
+                'school.restore',
 
                 'user.view',
                 'user.create',
@@ -28,6 +29,12 @@ class RolePermissionSeeder extends Seeder
 
                 'report.view',
                 'report.export',
+
+                'district.view',
+                'district.create',
+                'district.update',
+                'district.delete',
+                'district.restore',
             ],
 
             'admin' => [
@@ -35,6 +42,7 @@ class RolePermissionSeeder extends Seeder
                 'school.create',
                 'school.update',
                 'school.delete',
+                'school.restore',
 
                 'user.view',
                 'user.create',
@@ -46,6 +54,8 @@ class RolePermissionSeeder extends Seeder
 
                 'report.view',
                 'report.export',
+
+                'district.view',
             ],
 
             'data-entry' => [
@@ -55,11 +65,15 @@ class RolePermissionSeeder extends Seeder
 
                 'report.view',
                 'report.export',
+
+                'district.view',
             ],
 
             'viewer' => [
                 'school.view',
                 'report.view',
+                'district.view',
+
             ],
         ];
 
