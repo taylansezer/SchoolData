@@ -22,7 +22,11 @@ test('two factor challenge can be rendered', function () {
 
     $user = User::factory()->withTwoFactor()->create();
 
+
+    $this->get(route('login'));
+
     $this->post(route('login'), [
+        '_token' => csrf_token(),
         'email' => $user->email,
         'password' => 'password',
     ]);

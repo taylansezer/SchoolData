@@ -20,7 +20,12 @@ test('reset password link can be requested', function () {
 
     $user = User::factory()->create();
 
-    $this->post(route('password.email'), ['email' => $user->email]);
+   $this->get(route('password.request'));
+
+    $this->post(route('password.email'), [
+        '_token' => csrf_token(),
+        'email' => $user->email,
+    ]);
 
     Notification::assertSentTo($user, ResetPassword::class);
 });
@@ -30,7 +35,12 @@ test('reset password screen can be rendered', function () {
 
     $user = User::factory()->create();
 
-    $this->post(route('password.email'), ['email' => $user->email]);
+    $this->get(route('password.request'));
+
+    $this->post(route('password.email'), [
+        '_token' => csrf_token(),
+        'email' => $user->email,
+    ]);
 
     Notification::assertSentTo($user, ResetPassword::class, function ($notification) {
         $response = $this->get(route('password.reset', $notification->token));
@@ -46,10 +56,16 @@ test('password can be reset with valid token', function () {
 
     $user = User::factory()->create();
 
-    $this->post(route('password.email'), ['email' => $user->email]);
+    $this->get(route('password.request'));
+
+    $this->post(route('password.email'), [
+        '_token' => csrf_token(),
+        'email' => $user->email,
+    ]);
 
     Notification::assertSentTo($user, ResetPassword::class, function ($notification) use ($user) {
         $response = $this->post(route('password.update'), [
+            '_token' => csrf_token(),
             'token' => $notification->token,
             'email' => $user->email,
             'password' => 'password',
@@ -67,7 +83,10 @@ test('password can be reset with valid token', function () {
 test('password cannot be reset with invalid token', function () {
     $user = User::factory()->create();
 
+    $this->get(route('password.request'));
+
     $response = $this->post(route('password.update'), [
+        '_token' => csrf_token(),
         'token' => 'invalid-token',
         'email' => $user->email,
         'password' => 'newpassword123',
