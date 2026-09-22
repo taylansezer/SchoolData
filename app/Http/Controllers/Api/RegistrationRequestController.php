@@ -15,6 +15,20 @@ class RegistrationRequestController extends Controller
     ) {
     }
 
+    public function index(Request $request)
+    {
+        $this->authorize('viewAny', RegistrationRequest::class);
+
+        $registrationRequests = RegistrationRequest::visibleTo($request->user())
+            ->with('requestedRole')
+            ->orderByDesc('id')
+            ->get();
+
+        return response()->json([
+            'data' => $registrationRequests,
+        ]);
+    }
+
     public function store(RegistrationRequestStoreRequest $request)
     {
         $registrationRequest = $this->registrationRequestService
@@ -25,7 +39,10 @@ class RegistrationRequestController extends Controller
         ], 201);
     }
 
-    public function approve(Request $request, RegistrationRequest $registrationRequest) {
+    public function approve(
+        Request $request,
+        RegistrationRequest $registrationRequest
+    ) {
         $this->authorize('approve', $registrationRequest);
 
         $user = $this->registrationRequestService->approve(
@@ -39,7 +56,10 @@ class RegistrationRequestController extends Controller
         ]);
     }
 
-    public function reject(Request $request, RegistrationRequest $registrationRequest) {
+    public function reject(
+        Request $request,
+        RegistrationRequest $registrationRequest
+    ) {
         $this->authorize('reject', $registrationRequest);
 
         $registrationRequest = $this->registrationRequestService->reject(

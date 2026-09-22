@@ -23,7 +23,10 @@ class RegistrationRequestService
         }
     }
 
-    public function approve(RegistrationRequest $registrationRequest,User $reviewer): User {
+    public function approve(
+        RegistrationRequest $registrationRequest,
+        User $reviewer
+    ): User {
         return DB::transaction(function () use ($registrationRequest, $reviewer) {
 
             $user = User::create([
@@ -41,17 +44,19 @@ class RegistrationRequestService
                 ]
             );
 
-            $registrationRequest->update([
-                'status' => RegistrationRequestStatus::APPROVED,
-                'reviewed_by' => $reviewer->id,
-                'reviewed_at' => now(),
-            ]);
+            $registrationRequest->status = RegistrationRequestStatus::APPROVED;
+            $registrationRequest->reviewed_by = $reviewer->id;
+            $registrationRequest->reviewed_at = now();
+            $registrationRequest->save();
 
             return $user;
         });
     }
 
-    public function reject(RegistrationRequest $registrationRequest,User $reviewer): RegistrationRequest {
+    public function reject(
+        RegistrationRequest $registrationRequest,
+        User $reviewer
+    ): RegistrationRequest {
         return DB::transaction(function () use ($registrationRequest, $reviewer) {
 
             $registrationRequest->status = RegistrationRequestStatus::REJECTED;

@@ -2,15 +2,15 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Enums\RegistrationRequestStatus;
 use App\Enums\ScopeType;
+use App\Models\RegistrationRequest;
+use App\Models\Role;
+use App\Models\User;
+use App\Support\RegistrationRoleScope;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use App\Support\RegistrationRoleScope;
 use Illuminate\Validation\Validator;
-use App\Models\Role;
-use App\Enums\RegistrationRequestStatus;
-use App\Models\RegistrationRequest;
-use App\Models\User;
 
 class RegistrationRequestStoreRequest extends FormRequest
 {

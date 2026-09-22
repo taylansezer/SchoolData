@@ -63,10 +63,13 @@ test('security page renders without two factor when feature is disabled', functi
 test('password can be updated', function () {
     $user = User::factory()->create();
 
+    $this->get(route('home'));
+
     $response = $this
         ->actingAs($user)
         ->from(route('security.edit'))
         ->put(route('user-password.update'), [
+            '_token' => csrf_token(),
             'current_password' => 'password',
             'password' => 'new-password',
             'password_confirmation' => 'new-password',
@@ -82,10 +85,13 @@ test('password can be updated', function () {
 test('correct password must be provided to update password', function () {
     $user = User::factory()->create();
 
+    $this->get(route('home'));
+
     $response = $this
         ->actingAs($user)
         ->from(route('security.edit'))
         ->put(route('user-password.update'), [
+            '_token' => csrf_token(),
             'current_password' => 'wrong-password',
             'password' => 'new-password',
             'password_confirmation' => 'new-password',

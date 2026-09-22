@@ -4,6 +4,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\RateLimiter;
 use Laravel\Fortify\Features;
 
+
 test('login screen can be rendered', function () {
     $response = $this->get(route('login'));
 
@@ -13,7 +14,9 @@ test('login screen can be rendered', function () {
 test('users can authenticate using the login screen', function () {
     $user = User::factory()->create();
 
+    $this->get(route('login'));
     $response = $this->post(route('login.store'), [
+        '_token' => csrf_token(),
         'email' => $user->email,
         'password' => 'password',
     ]);
@@ -32,7 +35,9 @@ test('users with two factor enabled are redirected to two factor challenge', fun
 
     $user = User::factory()->withTwoFactor()->create();
 
+    $this->get(route('login'));
     $response = $this->post(route('login'), [
+        '_token' => csrf_token(),
         'email' => $user->email,
         'password' => 'password',
     ]);
@@ -45,6 +50,7 @@ test('users with two factor enabled are redirected to two factor challenge', fun
 test('users can not authenticate with invalid password', function () {
     $user = User::factory()->create();
 
+
     $this->post(route('login.store'), [
         'email' => $user->email,
         'password' => 'wrong-password',
@@ -56,7 +62,11 @@ test('users can not authenticate with invalid password', function () {
 test('users can logout', function () {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->post(route('logout'));
+    $this->get(route('login'));
+
+    $response = $this->actingAs($user)->post(route('logout'), [
+        '_token' => csrf_token(),
+    ]);;
 
     $response->assertRedirect(route('home'));
 
@@ -66,9 +76,11 @@ test('users can logout', function () {
 test('users are rate limited', function () {
     $user = User::factory()->create();
 
+    $this->get(route('login'));
     RateLimiter::increment(md5('login'.implode('|', [$user->email, '127.0.0.1'])), amount: 5);
 
     $response = $this->post(route('login.store'), [
+        '_token' => csrf_token(),
         'email' => $user->email,
         'password' => 'wrong-password',
     ]);
