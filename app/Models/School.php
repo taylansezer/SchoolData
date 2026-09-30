@@ -14,6 +14,7 @@ class School extends Model
 
     protected $fillable = [
         'district_id',
+        'institution_code',
         'school_type_id',
         'name',
         'address',
