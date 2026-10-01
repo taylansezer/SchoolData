@@ -20,7 +20,7 @@ test('reset password link can be requested', function () {
 
     $user = User::factory()->create();
 
-   $this->get(route('password.request'));
+    $this->get(route('password.request'));
 
     $this->post(route('password.email'), [
         '_token' => csrf_token(),

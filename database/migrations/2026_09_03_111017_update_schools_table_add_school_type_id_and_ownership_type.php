@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-            Schema::table('schools', function (Blueprint $table) {
+        Schema::table('schools', function (Blueprint $table) {
             $table->foreignId('school_type_id')
                 ->nullable()
                 ->after('district_id')

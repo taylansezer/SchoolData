@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\SchoolResource;
 use App\Http\Controllers\Controller;
-use App\Models\School;
-use Illuminate\Http\JsonResponse;
 use App\Http\Requests\Api\SchoolIndexRequest;
 use App\Http\Requests\Api\SchoolStoreRequest;
 use App\Http\Requests\Api\SchoolUpdateRequest;
+use App\Http\Resources\SchoolResource;
+use App\Models\School;
 
 class SchoolController extends Controller
 {
-
-     public function index(SchoolIndexRequest $request)
+    public function index(SchoolIndexRequest $request)
     {
         $this->authorize('viewAny', School::class);
 
@@ -33,14 +31,14 @@ class SchoolController extends Controller
         }
 
         if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->input('search') . '%');
+            $query->where('name', 'like', '%'.$request->input('search').'%');
         }
 
         $perPage = $request->integer('per_page', 15);
 
         return SchoolResource::collection(
             $query->paginate($perPage)
-    );
+        );
     }
 
     public function show(School $school)
@@ -48,6 +46,7 @@ class SchoolController extends Controller
         $this->authorize('view', $school);
 
         $school->load(['district', 'schoolType']);
+
         return new SchoolResource($school);
 
     }

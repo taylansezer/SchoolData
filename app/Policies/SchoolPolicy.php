@@ -2,10 +2,10 @@
 
 namespace App\Policies;
 
+use App\Enums\ScopeType;
+use App\Models\District;
 use App\Models\School;
 use App\Models\User;
-use App\Enums\ScopeType;
-use Illuminate\Auth\Access\Response;
 
 class SchoolPolicy
 {
@@ -52,7 +52,6 @@ class SchoolPolicy
     {
         return $user->hasPermission('school.delete')
             && $this->hasSchoolScope($user, $school);
-
 
     }
 
@@ -103,7 +102,7 @@ class SchoolPolicy
 
     private function canCreateInScope(User $user, array $attributes): bool
     {
-        if (!isset($attributes['district_id'])) {
+        if (! isset($attributes['district_id'])) {
             return false;
         }
 
@@ -124,7 +123,7 @@ class SchoolPolicy
             }
 
             if ($scopeType === ScopeType::PROVINCE) {
-                $district = \App\Models\District::find($districtId);
+                $district = District::find($districtId);
 
                 if ($district && $district->province_id === $scopeId) {
                     return true;

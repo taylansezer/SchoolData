@@ -14,7 +14,7 @@ class SchoolResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-             return [
+        return [
             'id' => $this->id,
             'institution_code' => $this->institution_code,
             'name' => $this->name,
@@ -41,6 +41,6 @@ class SchoolResource extends JsonResource
 
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
-            ];
+        ];
     }
 }

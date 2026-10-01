@@ -102,6 +102,3 @@ class RegistrationRequest extends Model
         });
     }
 }
-
-
-

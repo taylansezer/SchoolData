@@ -104,6 +104,7 @@ class RegistrationRequestStoreRequest extends FormRequest
             }
         });
     }
+
     private function scopeExistsRule()
     {
         return match ($this->input('scope_type')) {

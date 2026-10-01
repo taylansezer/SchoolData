@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\SchoolType;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class SchoolTypeSeeder extends Seeder
@@ -11,7 +10,7 @@ class SchoolTypeSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-   public function run(): void
+    public function run(): void
     {
         $schoolTypes = [
             [

@@ -4,7 +4,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\RateLimiter;
 use Laravel\Fortify\Features;
 
-
 test('login screen can be rendered', function () {
     $response = $this->get(route('login'));
 
@@ -50,7 +49,6 @@ test('users with two factor enabled are redirected to two factor challenge', fun
 test('users can not authenticate with invalid password', function () {
     $user = User::factory()->create();
 
-
     $this->post(route('login.store'), [
         'email' => $user->email,
         'password' => 'wrong-password',
@@ -66,7 +64,7 @@ test('users can logout', function () {
 
     $response = $this->actingAs($user)->post(route('logout'), [
         '_token' => csrf_token(),
-    ]);;
+    ]);
 
     $response->assertRedirect(route('home'));
 

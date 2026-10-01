@@ -12,9 +12,8 @@ test('registration screen can be rendered', function () {
     $response->assertOk();
 });
 
-
 test('new users can register', function () {
-     $this->get(route('register'));
+    $this->get(route('register'));
 
     $token = csrf_token();
     $response = $this->post(route('register.store'), [
@@ -25,7 +24,6 @@ test('new users can register', function () {
         'password' => 'password',
         'password_confirmation' => 'password',
     ]);
-
 
     $this->assertAuthenticated();
     $response->assertRedirect(route('dashboard', absolute: false));

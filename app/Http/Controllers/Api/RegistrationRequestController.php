@@ -12,8 +12,7 @@ class RegistrationRequestController extends Controller
 {
     public function __construct(
         private RegistrationRequestService $registrationRequestService
-    ) {
-    }
+    ) {}
 
     public function index(Request $request)
     {
@@ -73,5 +72,3 @@ class RegistrationRequestController extends Controller
         ]);
     }
 }
-
-

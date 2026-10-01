@@ -8,7 +8,6 @@ use App\Models\User;
 
 class DistrictPolicy
 {
-
     public function viewAny(User $user): bool
     {
         return $user->hasPermission('district.view');
@@ -40,7 +39,6 @@ class DistrictPolicy
         return false;
     }
 
-
     public function create(User $user): bool
     {
         return $user->hasPermission('district.create');
@@ -65,5 +63,4 @@ class DistrictPolicy
     {
         return false;
     }
-
 }

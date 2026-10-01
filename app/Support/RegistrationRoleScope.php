@@ -4,7 +4,6 @@ namespace App\Support;
 
 use App\Enums\ScopeType;
 
-
 class RegistrationRoleScope
 {
     public static function isAllowed(string $roleSlug, string $scopeType): bool

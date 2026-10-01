@@ -2,18 +2,18 @@
 
 namespace App\Services;
 
+use App\Enums\RegistrationRequestStatus;
 use App\Exceptions\RegistrationRequestConflictException;
 use App\Models\RegistrationRequest;
-use Illuminate\Database\UniqueConstraintViolationException;
-use App\Enums\RegistrationRequestStatus;
 use App\Models\User;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Facades\DB;
 
 class RegistrationRequestService
 {
     public function create(array $data): RegistrationRequest
     {
-       try {
+        try {
             return RegistrationRequest::create($data);
         } catch (UniqueConstraintViolationException $exception) {
             throw new RegistrationRequestConflictException(

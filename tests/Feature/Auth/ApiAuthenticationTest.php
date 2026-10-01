@@ -102,5 +102,3 @@ it('users can logout through the API', function () {
 
     $this->assertDatabaseCount('personal_access_tokens', 0);
 });
-
-
