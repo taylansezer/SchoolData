@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { LayoutGrid,School } from 'lucide-react';
+import { LayoutGrid, School } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -25,9 +25,8 @@ const mainNavItems: NavItem[] = [
         title: 'Okullar',
         href: '/schools',
         icon: School,
-    }
+    },
 ];
-
 
 export function AppSidebar() {
     return (

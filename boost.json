@@ -1,6 +1,4 @@
 {
-    "agents": [
-        "junie"
-    ],
+    "agents": ["junie"],
     "guidelines": true
 }

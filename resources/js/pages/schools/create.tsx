@@ -39,7 +39,6 @@ export default function SchoolsCreate() {
                 {/* Form */}
                 <div className="rounded-xl border p-6">
                     <div className="grid gap-6 md:grid-cols-2">
-
                         <div className="grid gap-2">
                             <Label htmlFor="institution_code">Kurum Kodu</Label>
 
@@ -97,9 +96,7 @@ export default function SchoolsCreate() {
                                     <SelectItem value="ortaokul">
                                         Ortaokul
                                     </SelectItem>
-                                    <SelectItem value="lise">
-                                        Lise
-                                    </SelectItem>
+                                    <SelectItem value="lise">Lise</SelectItem>
                                     <SelectItem value="mesleki-teknik">
                                         Mesleki ve Teknik Lise
                                     </SelectItem>
@@ -117,10 +114,7 @@ export default function SchoolsCreate() {
 
                         <div className="grid gap-2 md:col-span-2">
                             <Label htmlFor="address">Adres</Label>
-                            <Input
-                                id="address"
-                                placeholder="Okul adresi"
-                            />
+                            <Input id="address" placeholder="Okul adresi" />
                         </div>
 
                         <div className="grid gap-2">
