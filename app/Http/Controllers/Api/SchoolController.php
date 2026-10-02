@@ -8,10 +8,12 @@ use App\Http\Requests\Api\SchoolStoreRequest;
 use App\Http\Requests\Api\SchoolUpdateRequest;
 use App\Http\Resources\SchoolResource;
 use App\Models\School;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class SchoolController extends Controller
 {
-    public function index(SchoolIndexRequest $request)
+    public function index(SchoolIndexRequest $request): AnonymousResourceCollection
     {
         $this->authorize('viewAny', School::class);
 
@@ -41,7 +43,7 @@ class SchoolController extends Controller
         );
     }
 
-    public function show(School $school)
+    public function show(School $school): SchoolResource
     {
         $this->authorize('view', $school);
 
@@ -51,7 +53,7 @@ class SchoolController extends Controller
 
     }
 
-    public function store(SchoolStoreRequest $request)
+    public function store(SchoolStoreRequest $request): SchoolResource
     {
         $this->authorize('create', [School::class, $request->validated()]);
 
@@ -62,7 +64,7 @@ class SchoolController extends Controller
         return new SchoolResource($school);
     }
 
-    public function update(SchoolUpdateRequest $request, School $school)
+    public function update(SchoolUpdateRequest $request, School $school): SchoolResource
     {
         $this->authorize('update', $school);
 
@@ -73,7 +75,7 @@ class SchoolController extends Controller
         return new SchoolResource($school);
     }
 
-    public function destroy(School $school)
+    public function destroy(School $school): JsonResponse
     {
         $this->authorize('delete', $school);
 
@@ -84,7 +86,7 @@ class SchoolController extends Controller
         ]);
     }
 
-    public function restore(int $id)
+    public function restore(int $id): SchoolResource
     {
         $school = School::withTrashed()->findOrFail($id);
 

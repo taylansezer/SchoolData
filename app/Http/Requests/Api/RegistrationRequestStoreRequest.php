@@ -8,6 +8,7 @@ use App\Models\RegistrationRequest;
 use App\Models\Role;
 use App\Models\User;
 use App\Support\RegistrationRoleScope;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
@@ -26,6 +27,9 @@ class RegistrationRequestStoreRequest extends FormRequest
         ]);
     }
 
+    /**
+     * @return array<string, ValidationRule|array<mixed>|string>
+     */
     public function rules(): array
     {
         return [
@@ -105,7 +109,7 @@ class RegistrationRequestStoreRequest extends FormRequest
         });
     }
 
-    private function scopeExistsRule()
+    private function scopeExistsRule(): object
     {
         return match ($this->input('scope_type')) {
             ScopeType::PROVINCE->value => Rule::exists('provinces', 'id'),

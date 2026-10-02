@@ -6,11 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\DistrictStoreRequest;
 use App\Http\Requests\Api\DistrictUpdateRequest;
 use App\Models\District;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class DistrictController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $this->authorize('viewAny', District::class);
         $districts = District::with('province')
@@ -23,7 +24,7 @@ class DistrictController extends Controller
         ]);
     }
 
-    public function show(District $district)
+    public function show(District $district): JsonResponse
     {
         $this->authorize('view', $district);
 
@@ -32,7 +33,7 @@ class DistrictController extends Controller
         ]);
     }
 
-    public function store(DistrictStoreRequest $request)
+    public function store(DistrictStoreRequest $request): JsonResponse
     {
         $this->authorize('create', District::class);
 
@@ -43,7 +44,7 @@ class DistrictController extends Controller
         ], 201);
     }
 
-    public function update(DistrictUpdateRequest $request, District $district)
+    public function update(DistrictUpdateRequest $request, District $district): JsonResponse
     {
         $this->authorize('update', $district);
 
@@ -54,7 +55,7 @@ class DistrictController extends Controller
         ]);
     }
 
-    public function destroy(District $district)
+    public function destroy(District $district): JsonResponse
     {
         $this->authorize('delete', $district);
 
@@ -65,7 +66,7 @@ class DistrictController extends Controller
         ]);
     }
 
-    public function restore(int $id)
+    public function restore(int $id): JsonResponse
     {
         $district = District::withTrashed()->findOrFail($id);
 

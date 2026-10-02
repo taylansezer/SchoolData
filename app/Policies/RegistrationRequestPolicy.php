@@ -77,7 +77,7 @@ class RegistrationRequestPolicy
             $scopeType = $role->pivot->scope_type;
             $scopeId = (int) $role->pivot->scope_id;
 
-            if ($scopeType === ScopeType::PROVINCE) {
+            if ($scopeType === ScopeType::PROVINCE->value) {
                 if (
                     $registrationRequest->scope_type === ScopeType::PROVINCE
                     && (int) $registrationRequest->scope_id === $scopeId
@@ -106,7 +106,7 @@ class RegistrationRequestPolicy
                 }
             }
 
-            if ($scopeType === ScopeType::DISTRICT) {
+            if ($scopeType === ScopeType::DISTRICT->value) {
                 if (
                     $registrationRequest->scope_type === ScopeType::DISTRICT
                     && (int) $registrationRequest->scope_id === $scopeId
@@ -135,11 +135,11 @@ class RegistrationRequestPolicy
             $scopeType = $role->pivot->scope_type;
             $scopeId = (int) $role->pivot->scope_id;
 
-            if ($scopeType === ScopeType::PROVINCE) {
+            if ($scopeType === ScopeType::PROVINCE->value) {
                 return $this->hasScopeAccess($user, $registrationRequest);
             }
 
-            if ($scopeType === ScopeType::DISTRICT) {
+            if ($scopeType === ScopeType::DISTRICT->value) {
                 if (
                     $registrationRequest->scope_type === ScopeType::DISTRICT
                     && (int) $registrationRequest->scope_id === $scopeId

@@ -29,11 +29,17 @@ class School extends Model
         'longitude',
     ];
 
+    /**
+     * @return BelongsTo<District, $this>
+     */
     public function district(): BelongsTo
     {
         return $this->belongsTo(District::class);
     }
 
+    /**
+     * @return BelongsTo<SchoolType, $this>
+     */
     public function schoolType(): BelongsTo
     {
         return $this->belongsTo(SchoolType::class);
@@ -47,6 +53,10 @@ class School extends Model
         return $this->belongsTo(Directorate::class);
     }
 
+    /**
+     * @param  Builder<School>  $query
+     * @return Builder<School>
+     */
     public function scopeVisibleTo(Builder $query, User $user): Builder
     {
         return $query->where(function (Builder $query) use ($user) {
@@ -54,15 +64,15 @@ class School extends Model
                 $scopeType = $role->pivot->scope_type;
                 $scopeId = (int) $role->pivot->scope_id;
 
-                if ($scopeType === ScopeType::SCHOOL) {
+                if ($scopeType === ScopeType::SCHOOL->value) {
                     $query->orWhere('id', $scopeId);
                 }
 
-                if ($scopeType === ScopeType::DISTRICT) {
+                if ($scopeType === ScopeType::DISTRICT->value) {
                     $query->orWhere('district_id', $scopeId);
                 }
 
-                if ($scopeType === ScopeType::PROVINCE) {
+                if ($scopeType === ScopeType::PROVINCE->value) {
                     $query->orWhereHas('district', function (Builder $query) use ($scopeId) {
                         $query->where('province_id', $scopeId);
                     });

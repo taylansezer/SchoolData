@@ -27,7 +27,7 @@ class SchoolPolicy
     }
 
     /**
-     * Determine whether the user can create models.
+     * @param  array<string, mixed>  $attributes
      */
     public function create(User $user, array $attributes): bool
     {
@@ -78,19 +78,19 @@ class SchoolPolicy
             $scopeType = $role->pivot->scope_type;
             $scopeId = (int) $role->pivot->scope_id;
 
-            if ($scopeType === ScopeType::SCHOOL) {
+            if ($scopeType === ScopeType::SCHOOL->value) {
                 if ($scopeId === $school->id) {
                     return true;
                 }
             }
 
-            if ($scopeType === ScopeType::DISTRICT) {
+            if ($scopeType === ScopeType::DISTRICT->value) {
                 if ($scopeId === $school->district_id) {
                     return true;
                 }
             }
 
-            if ($scopeType === ScopeType::PROVINCE) {
+            if ($scopeType === ScopeType::PROVINCE->value) {
                 if ($school->district->province_id === $scopeId) {
                     return true;
                 }
@@ -100,6 +100,9 @@ class SchoolPolicy
         return false;
     }
 
+    /**
+     * @param  array<string, mixed>  $attributes
+     */
     private function canCreateInScope(User $user, array $attributes): bool
     {
         if (! isset($attributes['district_id'])) {
@@ -112,17 +115,17 @@ class SchoolPolicy
             $scopeType = $role->pivot->scope_type;
             $scopeId = (int) $role->pivot->scope_id;
 
-            if ($scopeType === ScopeType::SCHOOL) {
+            if ($scopeType === ScopeType::SCHOOL->value) {
                 continue;
             }
 
-            if ($scopeType === ScopeType::DISTRICT) {
+            if ($scopeType === ScopeType::DISTRICT->value) {
                 if ($districtId === $scopeId) {
                     return true;
                 }
             }
 
-            if ($scopeType === ScopeType::PROVINCE) {
+            if ($scopeType === ScopeType::PROVINCE->value) {
                 $district = District::find($districtId);
 
                 if ($district && $district->province_id === $scopeId) {

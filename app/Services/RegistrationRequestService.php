@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\DB;
 
 class RegistrationRequestService
 {
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function create(array $data): RegistrationRequest
     {
         try {

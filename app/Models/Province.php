@@ -11,6 +11,9 @@ class Province extends Model
         'name',
     ];
 
+    /**
+     * @return HasMany<District, $this>
+     */
     public function districts(): HasMany
     {
         return $this->hasMany(District::class);

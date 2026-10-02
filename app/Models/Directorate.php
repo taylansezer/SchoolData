@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Directorate extends Model
 {
-
     protected $fillable = [
         'name',
         'is_active',

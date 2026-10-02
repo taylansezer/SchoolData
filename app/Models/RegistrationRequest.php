@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property RegistrationRequestStatus $status
+ * @property ScopeType $scope_type
+ * @property int|null $reviewed_by
+ */
 class RegistrationRequest extends Model
 {
     protected $fillable = [
@@ -35,16 +40,26 @@ class RegistrationRequest extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<Role, $this>
+     */
     public function requestedRole(): BelongsTo
     {
         return $this->belongsTo(Role::class, 'requested_role_id');
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function reviewer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'reviewed_by');
     }
 
+    /**
+     * @param  Builder<RegistrationRequest>  $query
+     * @return Builder<RegistrationRequest>
+     */
     public function scopeVisibleTo(Builder $query, User $user): Builder
     {
         return $query->where(function (Builder $query) use ($user) {
@@ -52,7 +67,7 @@ class RegistrationRequest extends Model
                 $scopeType = $role->pivot->scope_type;
                 $scopeId = (int) $role->pivot->scope_id;
 
-                if ($scopeType === ScopeType::PROVINCE) {
+                if ($scopeType === ScopeType::PROVINCE->value) {
                     $query->orWhere(function (Builder $query) use ($scopeId) {
                         $query->where('scope_type', ScopeType::PROVINCE->value)
                             ->where('scope_id', $scopeId);
@@ -83,7 +98,7 @@ class RegistrationRequest extends Model
                     });
                 }
 
-                if ($scopeType === ScopeType::DISTRICT) {
+                if ($scopeType === ScopeType::DISTRICT->value) {
                     $query->orWhere(function (Builder $query) use ($scopeId) {
                         $query->where('scope_type', ScopeType::DISTRICT->value)
                             ->where('scope_id', $scopeId);

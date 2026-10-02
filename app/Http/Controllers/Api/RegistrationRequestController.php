@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\RegistrationRequestStoreRequest;
 use App\Models\RegistrationRequest;
 use App\Services\RegistrationRequestService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class RegistrationRequestController extends Controller
@@ -14,7 +15,7 @@ class RegistrationRequestController extends Controller
         private RegistrationRequestService $registrationRequestService
     ) {}
 
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $this->authorize('viewAny', RegistrationRequest::class);
 
@@ -28,7 +29,7 @@ class RegistrationRequestController extends Controller
         ]);
     }
 
-    public function store(RegistrationRequestStoreRequest $request)
+    public function store(RegistrationRequestStoreRequest $request): JsonResponse
     {
         $registrationRequest = $this->registrationRequestService
             ->create($request->validated());
@@ -41,7 +42,7 @@ class RegistrationRequestController extends Controller
     public function approve(
         Request $request,
         RegistrationRequest $registrationRequest
-    ) {
+    ): JsonResponse {
         $this->authorize('approve', $registrationRequest);
 
         $user = $this->registrationRequestService->approve(
@@ -58,7 +59,7 @@ class RegistrationRequestController extends Controller
     public function reject(
         Request $request,
         RegistrationRequest $registrationRequest
-    ) {
+    ): JsonResponse {
         $this->authorize('reject', $registrationRequest);
 
         $registrationRequest = $this->registrationRequestService->reject(

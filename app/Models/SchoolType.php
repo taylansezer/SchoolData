@@ -12,6 +12,9 @@ class SchoolType extends Model
         'slug',
     ];
 
+    /**
+     * @return HasMany<School, $this>
+     */
     public function schools(): HasMany
     {
         return $this->hasMany(School::class);
