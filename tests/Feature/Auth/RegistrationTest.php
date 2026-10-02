@@ -13,8 +13,13 @@ test('registration screen can be rendered', function () {
 });
 
 test('new users can register', function () {
+    $this->get(route('register'));
+
+    $token = csrf_token();
     $response = $this->post(route('register.store'), [
-        'name' => 'Test User',
+        '_token' => $token,
+        'first_name' => 'Test',
+        'last_name' => 'User',
         'email' => 'test@example.com',
         'password' => 'password',
         'password_confirmation' => 'password',
