@@ -24,6 +24,7 @@ class SchoolUpdateRequest extends FormRequest
     {
         return [
 
+            'directorate_id' => ['sometimes', 'integer', 'exists:directorates,id'],
             'school_type_id' => ['sometimes', 'integer', 'exists:school_types,id'],
 
             'name' => ['sometimes', 'string', 'max:255'],

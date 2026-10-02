@@ -18,6 +18,11 @@ class SchoolStoreRequest extends FormRequest
     {
         return [
             'district_id' => ['required', 'integer', 'exists:districts,id'],
+            'directorate_id' => [
+                'required',
+                'integer',
+                'exists:directorates,id',
+            ],
             'institution_code' => ['required', 'integer', 'unique:schools,institution_code'],
             'school_type_id' => ['required', 'integer', 'exists:school_types,id'],
 

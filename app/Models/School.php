@@ -14,6 +14,7 @@ class School extends Model
 
     protected $fillable = [
         'district_id',
+        'directorate_id',
         'institution_code',
         'school_type_id',
         'name',
@@ -36,6 +37,14 @@ class School extends Model
     public function schoolType(): BelongsTo
     {
         return $this->belongsTo(SchoolType::class);
+    }
+
+    /**
+     * @return BelongsTo<Directorate, $this>
+     */
+    public function directorate(): BelongsTo
+    {
+        return $this->belongsTo(Directorate::class);
     }
 
     public function scopeVisibleTo(Builder $query, User $user): Builder

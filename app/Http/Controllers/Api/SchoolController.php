@@ -15,7 +15,7 @@ class SchoolController extends Controller
     {
         $this->authorize('viewAny', School::class);
 
-        $query = School::with(['district', 'schoolType'])
+        $query = School::with(['district', 'schoolType', 'directorate'])
             ->visibleTo($request->user());
 
         if ($request->filled('district_id')) {
@@ -45,7 +45,7 @@ class SchoolController extends Controller
     {
         $this->authorize('view', $school);
 
-        $school->load(['district', 'schoolType']);
+        $school->load(['district', 'schoolType', 'directorate']);
 
         return new SchoolResource($school);
 
@@ -57,7 +57,7 @@ class SchoolController extends Controller
 
         $school = School::create($request->validated());
 
-        $school->load(['district', 'schoolType']);
+        $school->load(['district', 'schoolType', 'directorate']);
 
         return new SchoolResource($school);
     }
@@ -68,7 +68,7 @@ class SchoolController extends Controller
 
         $school->update($request->validated());
 
-        $school->load(['district', 'schoolType']);
+        $school->load(['district', 'schoolType', 'directorate']);
 
         return new SchoolResource($school);
     }
@@ -92,7 +92,7 @@ class SchoolController extends Controller
 
         $school->restore();
 
-        $school->load(['district', 'schoolType']);
+        $school->load(['district', 'schoolType', 'directorate']);
 
         return new SchoolResource($school);
     }

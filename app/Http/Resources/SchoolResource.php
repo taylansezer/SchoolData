@@ -24,6 +24,11 @@ class SchoolResource extends JsonResource
                 'name' => $this->district->name,
             ],
 
+            'directorate' => [
+                'id' => $this->directorate->id,
+                'name' => $this->directorate->name,
+            ],
+
             'school_type' => [
                 'id' => $this->schoolType->id,
                 'name' => $this->schoolType->name,
