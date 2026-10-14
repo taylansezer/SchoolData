@@ -45,11 +45,11 @@ class District extends Model
                 $scopeType = $role->pivot->scope_type;
                 $scopeId = (int) $role->pivot->scope_id;
 
-                if ($scopeType === ScopeType::DISTRICT->value) {
+                if ($scopeType === ScopeType::DISTRICT) {
                     $query->orWhere('id', $scopeId);
                 }
 
-                if ($scopeType === ScopeType::PROVINCE->value) {
+                if ($scopeType === ScopeType::PROVINCE) {
                     $query->orWhere('province_id', $scopeId);
                 }
             }

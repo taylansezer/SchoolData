@@ -64,15 +64,15 @@ class School extends Model
                 $scopeType = $role->pivot->scope_type;
                 $scopeId = (int) $role->pivot->scope_id;
 
-                if ($scopeType === ScopeType::SCHOOL->value) {
+                if ($scopeType === ScopeType::SCHOOL) {
                     $query->orWhere('id', $scopeId);
                 }
 
-                if ($scopeType === ScopeType::DISTRICT->value) {
+                if ($scopeType === ScopeType::DISTRICT) {
                     $query->orWhere('district_id', $scopeId);
                 }
 
-                if ($scopeType === ScopeType::PROVINCE->value) {
+                if ($scopeType === ScopeType::PROVINCE) {
                     $query->orWhereHas('district', function (Builder $query) use ($scopeId) {
                         $query->where('province_id', $scopeId);
                     });

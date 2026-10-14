@@ -78,19 +78,19 @@ class SchoolPolicy
             $scopeType = $role->pivot->scope_type;
             $scopeId = (int) $role->pivot->scope_id;
 
-            if ($scopeType === ScopeType::SCHOOL->value) {
+            if ($scopeType === ScopeType::SCHOOL) {
                 if ($scopeId === $school->id) {
                     return true;
                 }
             }
 
-            if ($scopeType === ScopeType::DISTRICT->value) {
+            if ($scopeType === ScopeType::DISTRICT) {
                 if ($scopeId === $school->district_id) {
                     return true;
                 }
             }
 
-            if ($scopeType === ScopeType::PROVINCE->value) {
+            if ($scopeType === ScopeType::PROVINCE) {
                 if ($school->district->province_id === $scopeId) {
                     return true;
                 }
@@ -115,17 +115,17 @@ class SchoolPolicy
             $scopeType = $role->pivot->scope_type;
             $scopeId = (int) $role->pivot->scope_id;
 
-            if ($scopeType === ScopeType::SCHOOL->value) {
+            if ($scopeType === ScopeType::SCHOOL) {
                 continue;
             }
 
-            if ($scopeType === ScopeType::DISTRICT->value) {
+            if ($scopeType === ScopeType::DISTRICT) {
                 if ($districtId === $scopeId) {
                     return true;
                 }
             }
 
-            if ($scopeType === ScopeType::PROVINCE->value) {
+            if ($scopeType === ScopeType::PROVINCE) {
                 $district = District::find($districtId);
 
                 if ($district && $district->province_id === $scopeId) {

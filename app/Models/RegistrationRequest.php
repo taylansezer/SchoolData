@@ -67,7 +67,7 @@ class RegistrationRequest extends Model
                 $scopeType = $role->pivot->scope_type;
                 $scopeId = (int) $role->pivot->scope_id;
 
-                if ($scopeType === ScopeType::PROVINCE->value) {
+                if ($scopeType === ScopeType::PROVINCE) {
                     $query->orWhere(function (Builder $query) use ($scopeId) {
                         $query->where('scope_type', ScopeType::PROVINCE->value)
                             ->where('scope_id', $scopeId);
@@ -98,7 +98,7 @@ class RegistrationRequest extends Model
                     });
                 }
 
-                if ($scopeType === ScopeType::DISTRICT->value) {
+                if ($scopeType === ScopeType::DISTRICT) {
                     $query->orWhere(function (Builder $query) use ($scopeId) {
                         $query->where('scope_type', ScopeType::DISTRICT->value)
                             ->where('scope_id', $scopeId);

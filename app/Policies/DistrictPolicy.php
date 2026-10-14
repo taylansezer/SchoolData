@@ -23,13 +23,13 @@ class DistrictPolicy
             $scopeType = $role->pivot->scope_type;
             $scopeId = (int) $role->pivot->scope_id;
 
-            if ($scopeType === ScopeType::DISTRICT->value) {
+            if ($scopeType === ScopeType::DISTRICT) {
                 if ($district->id === $scopeId) {
                     return true;
                 }
             }
 
-            if ($scopeType === ScopeType::PROVINCE->value) {
+            if ($scopeType === ScopeType::PROVINCE) {
                 if ($district->province_id === $scopeId) {
                     return true;
                 }
